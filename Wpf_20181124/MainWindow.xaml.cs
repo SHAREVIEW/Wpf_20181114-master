@@ -22,7 +22,7 @@ namespace Wpf_20181124
     {
         
         List<string> expresions = new List<string>();  //字符串形式存储，List<string> expresions = new ArrayList<string>()
-        //调用集合类的无参构造函数实例化一个集合对象,并将实例化的对象赋值给一个名字为List的String类型的集合变量
+        //调用集合类的无参构造函数实例化一个集合对象,并将实例化的对象赋值给一个名字为 expresions 的String类型的集合变量
         public MainWindow()
         {                
             InitializeComponent();
