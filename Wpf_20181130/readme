@@ -1,0 +1,62 @@
+
+一、serial port names：
+
+1)  comboBox1.Items.AddRange(System.IO.Ports.SerialPort.GetPortNames());  
+
+2)  for:
+	string[] portList = System.IO.Ports.SerialPort.GetPortNames();
+            for (int i = 0; i < portList.Length; ++i)
+            {
+                string name = portList[i];
+                comboBox1.Items.Add(name);
+            }
+
+	foreach:
+	foreach (string str in SerialPort.GetPortNames())
+            {
+                PortName.Items.Add(str);
+            }
+
+
+
+
+
+			byte[] t = new byte[2];
+t[0] = 0xAA;
+t[1] = 0xBB;
+串口对象.Write(t,0,2);
+其中3个参数顺序为：byte型数组，偏移（从第几位开始发，从0开始计），发送长度
+为了避免误会，额外说个基础:0xAA是 16进制的AA
+
+
+  if (checkBoxHexSend.Checked)
+            {
+                //我们不管规则了。如果写错了一些，我们允许的，只用正则得到有效的十六进制数
+                MatchCollection mc = Regex.Matches(txSend.Text, @"(?i)[\da-f]{2}");
+                List<byte> buf = new List<byte>();//填充到这个临时列表中
+                //依次添加到列表中
+                foreach (Match m in mc)
+                {
+                    buf.Add(byte.Parse(m.Value));
+                }
+                //转换列表为数组后发送
+                comm.Write(buf.ToArray(), 0, buf.Count);
+                //记录发送的字节数
+                n = buf.Count;
+            }
+            else//ascii编码直接发送
+            {
+                //包含换行符
+                if (checkBoxNewlineSend.Checked)
+                {
+                    comm.WriteLine(txSend.Text);
+                    n = txSend.Text.Length + 2;
+                }
+                else//不包含换行符
+                {
+                    comm.Write(txSend.Text);
+                    n = txSend.Text.Length;
+                }
+            }
+            send_count += n;//累加发送字节数
+            labelSendCount.Text = "Send:" + send_count.ToString();//更新界面
