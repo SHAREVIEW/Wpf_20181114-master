@@ -23,11 +23,13 @@
         <Button Content="确认"  Margin="97,351,0,0"  HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Click="ButtonResult_Click"/>
         <Menu HorizontalAlignment="Left" Height="20" VerticalAlignment="Top" Width="792" Background="White">
             <MenuItem  Header="文件(F)"  FontSize="13" Background="White" >
+               <!-- 
                 <MenuItem Header="新建(N)" FontSize="13" Background="White"/>
-                <MenuItem Header="打开(O)" FontSize="13" Background="White" />
+                <MenuItem Header="打开(O)" FontSize="13" Background="White"/>                
                 <MenuItem Header="保存(S)" FontSize="13" Background="White" Click="MenuItemSave_Click"/>
+                -->
                 <MenuItem Header="退出(X)" FontSize="13"  Background="White" Click="MenuItemExit_Click" />
             </MenuItem>
-        </Menu>
+        </Menu> 
     </Grid>
 </Window>

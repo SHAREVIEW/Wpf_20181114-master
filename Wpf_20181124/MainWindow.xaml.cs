@@ -19,35 +19,41 @@ namespace Wpf_20181124
     /// MainWindow.xaml 的交互逻辑
     /// </summary>
     public partial class MainWindow : Window
-    {
-        
-        List<string> expresions = new List<string>();  //初始化字符串存储
+    {        
+        List<string> expressions = new List<string>();  //实例化一个string类的集合变量用于存储
+
         public MainWindow()
         {                
             InitializeComponent();
 
+            ReadString();                  //读取文件显示余额
 
+            string[] accountTypeArr = new string[] { "借记卡", "贷记卡" };          //卡型下拉框
+            accountTypeBox.ItemsSource = accountTypeArr;                          //设置下拉菜单的可选项
+            accountTypeBox.SelectedIndex = 0;                                                //默认选中第0项
+        }
 
-      
+        private void ReadString()                      //读取文件显示余额
+        {
             try                                                                                                     //启动程序余额栏显示最后一次的金额，读取字符串
             {
-                FileStream afile = new FileStream("history.txt",  FileMode.OpenOrCreate);   //@"C:\Users\suanjuzi\Desktop\Wpf_20181114-master\Wpf_20181124\bin\Debug\
+                FileStream afile = new FileStream("history.txt", FileMode.OpenOrCreate);   //@"C:\Users\suanjuzi\Desktop\Wpf_20181114-master\Wpf_20181124\bin\Debug\
                 StreamReader sr = new StreamReader(afile);
                 String line;
                 while ((line = sr.ReadLine()) != null)
                 {
                     if (line.Contains("USD"))   //美元显示
-                    {                       
+                    {
                         string[] sline = line.Trim().Split(' ');    //删除字符串首尾字符，以空格分割（不包含空格）组成数组
                         USDBalance.Content = sline[6];
                         //sr.Close();
                     }
                     if (line.Contains("CNY"))       //人民币显示
-                    {   
+                    {
                         //string s = sr.ReadLine();  这句是读取当前行的下一行                          
                         string[] sline = line.Trim().Split(' ');    //删除字符串首尾字符，以空格分割（不包含空格）组成数组
                         CNYBalance.Content = sline[6];
-                        //sr.Close();
+                        //sr.Close();     
                     }
                 }
             }
@@ -56,15 +62,10 @@ namespace Wpf_20181124
                 //MessageBox.Show("404");
                 MessageBox.Show(e.ToString());
             }
-
-
-            string[] accountTypeArr = new string[] { "借记卡", "贷记卡" };          //卡型下拉框
-            accountTypeBox.ItemsSource = accountTypeArr;                          //设置下拉菜单的可选项
-            accountTypeBox.SelectedIndex = 0;                                                //默认选中第0项
         }
 
-    
-        private void InputAmount_TextChanged(object sender, TextChangedEventArgs e)                  //操作金额限制为数字输入
+
+            private void InputAmount_TextChanged(object sender, TextChangedEventArgs e)                  //操作金额限制为数字输入
         {             
             TextBox temptbox = sender as TextBox;
             TextChange[] change = new TextChange[e.Changes.Count];
@@ -93,12 +94,12 @@ namespace Wpf_20181124
                 if (CNYRadioBtn.IsChecked == true )
                 {
                     CNYBalance.Content =  Convert.ToDouble(CNYBalance.Content) + Convert.ToDouble(InputAmount.Text);
-                    expresions.Add("Operate(deposit CNY ------): "  + "depposit " + InputAmount.Text + " balance " + CNYBalance.Content + "        " + DateTime.Now);   // DateTime.Now.ToLongDateString()
+                    expressions.Add("Operate(deposit CNY ------): "  + "depposit " + InputAmount.Text + " balance " + CNYBalance.Content + "        " + DateTime.Now);   // DateTime.Now.ToLongDateString()
                 }
                 else
                  {
                      USDBalance.Content =Convert.ToDouble(USDBalance.Content) + Convert.ToDouble(InputAmount.Text);
-                    expresions.Add("Operate(deposit USD ------): " + "depposit " + InputAmount.Text + " balance " + USDBalance.Content + "        " + DateTime.Now);
+                    expressions.Add("Operate(deposit USD ------): " + "depposit " + InputAmount.Text + " balance " + USDBalance.Content + "        " + DateTime.Now);
 
                 }
             }
@@ -111,7 +112,7 @@ namespace Wpf_20181124
                         if (Convert.ToDouble(CNYBalance.Content) - Convert.ToDouble(InputAmount.Text) >= 0)
                         {
                             CNYBalance.Content = Convert.ToDouble(CNYBalance.Content) - Convert.ToDouble(InputAmount.Text);
-                            expresions.Add("Operate(withdraw CNY Debit): " + "withdraw " + InputAmount.Text + " balance " + CNYBalance.Content + "        " + DateTime.Now);
+                            expressions.Add("Operate(withdraw CNY Debit): " + "withdraw " + InputAmount.Text + " balance " + CNYBalance.Content + "        " + DateTime.Now);
 
                         }
                         else
@@ -124,7 +125,7 @@ namespace Wpf_20181124
                         if (Convert.ToDouble(USDBalance.Content) - Convert.ToDouble(InputAmount.Text) >= 0)
                         {
                             USDBalance.Content = Convert.ToDouble(USDBalance.Content) - Convert.ToDouble(InputAmount.Text);
-                            expresions.Add("Operate(withdraw USD Debit): " + "withdraw " + InputAmount.Text + " balance " + USDBalance.Content + "        " + DateTime.Now);
+                            expressions.Add("Operate(withdraw USD Debit): " + "withdraw " + InputAmount.Text + " balance " + USDBalance.Content + "        " + DateTime.Now);
 
                         }
                         else
@@ -138,30 +139,34 @@ namespace Wpf_20181124
                     if (CNYRadioBtn.IsChecked == true)
                     {
                         CNYBalance.Content = Convert.ToDouble(CNYBalance.Content) - Convert.ToDouble(InputAmount.Text);
-                        expresions.Add("Operate(withdraw CNY Credit): " + "withdraw " + InputAmount.Text + " balance " + CNYBalance.Content + "        " + DateTime.Now);
+                        expressions.Add("Operate(withdraw CNY Credit): " + "withdraw " + InputAmount.Text + " balance " + CNYBalance.Content + "        " + DateTime.Now);
 
                     }
                     else
                     {
                         USDBalance.Content = Convert.ToDouble(USDBalance.Content) - Convert.ToDouble(InputAmount.Text);
-                        expresions.Add("Operate(withdraw USD Credit): " + "withdraw " + InputAmount.Text + " balance " + USDBalance.Content + "        " + DateTime.Now);
+                        expressions.Add("Operate(withdraw USD Credit): " + "withdraw " + InputAmount.Text + " balance " + USDBalance.Content + "        " + DateTime.Now);
 
                     }
                 }
                         
              }
+            Save_Click();
+
             if (CheckBox.IsChecked == true)
             {
                 MessageBox.Show("打印凭条");
             }
+
         }
-        private void MenuItemSave_Click(object sender, RoutedEventArgs e)
+        //private void MenuItemSave_Click(object sender, RoutedEventArgs e)  //之前是在MenuItem上的保存按钮事件，xaml中注释了menuitem中的保存按钮
+        private void Save_Click()      //现更改保存文件到buttonresult（确认）按钮
         {
             try
             {
                 FileStream SaveFile = new FileStream("History.txt", FileMode.Append);   //打开或新建,尾部追加
                 StreamWriter streamWriter = new StreamWriter(SaveFile);                // StreamWriter streamWriter = new StreamWriter(history.txt,true);
-                foreach (string a in expresions)                     //写入
+                foreach (string a in expressions)                     //写入
                 {
                     streamWriter.WriteLine(a);
                 }
@@ -178,7 +183,8 @@ namespace Wpf_20181124
         {                    
             Application.Current.Shutdown();         //退出程序
          }
+      
 
-        
+
     }
 }
