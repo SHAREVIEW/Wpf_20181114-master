@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:Wpf_20181130"
         mc:Ignorable="d"
         Title="MainWindow"  MinHeight="450" MinWidth="740" WindowStartupLocation="CenterScreen" Height="450" Width="740" >
-    <Grid>
+     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="50"/>
             <RowDefinition Height="50"/>
@@ -21,18 +21,18 @@
             <ColumnDefinition Width="335*"/>
         </Grid.ColumnDefinitions>
         <Label Content="串口名称" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="1" Grid.Column="1"/>
-        <ComboBox Grid.Row="1" Grid.Column="2" HorizontalAlignment="Left" VerticalAlignment="Top" Width="120" SelectionChanged="PortName_SelectionChanged" />
-        <Label Content="波特率" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="2" Grid.Column="1"/>
-        <ComboBox Grid.Row="2" Grid.Column="2" HorizontalAlignment="Left" VerticalAlignment="Top" Width="120" SelectionChanged="BaudRate_SelectionChanged"/>
-        <Button Name="OpenSerialButton" Grid.Row="3" Grid.Column="1" Content="打开串口" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Click="OpenSerialButton_Click" />
-        <Button Name="CloseSerialButton" Grid.Row="3" Grid.Column="2" Content="关闭串口" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Click="CloseSerialButton_Click"/>
-        <TextBox  Name="SendCommandTextBox" Grid.Row="4" Grid.Column="1" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" TextChanged="SendCommandTextBox_TextChanged"/>
-        <Button Name="SendCommandButton" Grid.Row="4" Grid.Column="2" Content="发送" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Click="SendCommandButton_Click"/>
-        <Border BorderBrush="Black" BorderThickness="1" Grid.Column="3" Margin="0,0,0,-15" Grid.RowSpan="5"/>
-        <Label  Name="DataReceived" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.RowSpan="5" Grid.Column="3"  Height="420" Width="310" >
+        <ComboBox Name="myPortName" Grid.Row="1" Grid.Column="2" HorizontalAlignment="Left" VerticalAlignment="Top" Width="120"  Height="23" />
+        <Label Content="波特率" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="2" Grid.Column="1"  Height="23"/>
+        <ComboBox Name="BaudRate" Grid.Row="2" Grid.Column="2" HorizontalAlignment="Left" VerticalAlignment="Top" Width="120"/>
+        <Button Name="OpenButton" Grid.Row="3" Grid.Column="1" Content="打开串口" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75"  Height="23" Click="OpenButton_Click"/>
+        <Button Name="CloseButton" Grid.Row="3" Grid.Column="2" Content="关闭串口" HorizontalAlignment="Left" Width="75" Margin="0,0,0,78" Height="23" VerticalAlignment="Bottom" Click="CloseButton_Click" />
+        <TextBox  Name="SendTextBox" Grid.Row="4" Grid.Column="1" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" />
+        <Button Name="SendButton" Grid.Row="4" Grid.Column="2" Content="发送" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75"  Height="23" Click="SendButton_Click" />
+        <Border BorderBrush="Black" BorderThickness="1" Grid.Column="3" Grid.RowSpan="5" />
+        <Label  Name="DataReceived" BorderThickness="1" Grid.RowSpan="5" Grid.Column="3"  >
         </Label>
 
 
 
-    </Grid> 
+    </Grid>
 </Window>
